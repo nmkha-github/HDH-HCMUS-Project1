@@ -1,1 +1,7 @@
-﻿  project1.vcxproj -> S:\4\hk1\HDH\github\HDH-HCMUS-Project1\project1\x64\Debug\project1.exe
+﻿  Source.cpp
+  project1.cpp
+S:\4\hk1\HDH\github\HDH-HCMUS-Project1\project1\project1.cpp(7,8): warning C4101: 'fat32': unreferenced local variable
+  Generating Code...
+S:\4\hk1\HDH\github\HDH-HCMUS-Project1\project1\Source.cpp(52): warning C4715: 'readSector': not all control paths return a value
+  LINK : S:\4\hk1\HDH\github\HDH-HCMUS-Project1\project1\x64\Debug\project1.exe not found or not built by the last incremental link; performing full link
+  project1.vcxproj -> S:\4\hk1\HDH\github\HDH-HCMUS-Project1\project1\x64\Debug\project1.exe

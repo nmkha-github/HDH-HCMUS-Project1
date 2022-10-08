@@ -81,3 +81,27 @@ void outputInforBootSector(FAT32 f32)
 }
 
 
+
+// Partition Bootsector NTFS
+void inputPartitionBootsector(BYTE* sector, NTFS& ntfs) {
+    ntfs.bytePerSec = hexToDec(sector, 11, 2);
+    ntfs.SC = hexToDec(sector, 13, 1);
+    ntfs.secPerTrack = hexToDec(sector, 24, 2);
+    ntfs.numberOf_Heads = hexToDec(sector, 26, 2);
+    ntfs.totalSector = hexToDec(sector, 40, 8);
+    ntfs.startSecDisk = hexToDec(sector, 28, 4);
+    ntfs.startCluster_MFT = hexToDec(sector, 48, 8);
+    ntfs.startCluster_MFTMirr = hexToDec(sector, 56, 8);
+    ntfs.sizeOf_MFTEntry = hexToDec(sector, 64, 1);
+}
+void outputInforPartitionBootSector(NTFS ntfs) {
+    cout << "1. So Byte cua 1 sector: " << ntfs.bytePerSec;
+    cout << "\n2. So Sector cho 1 cluster: " << ntfs.SC;
+    cout << "\n3. So sector cho 1 track: " << ntfs.secPerTrack;
+    cout << "\n4. So mat dia: " << ntfs.numberOf_Heads;
+    cout << "\n5. So Sector cua o dia logic: " << ntfs.totalSector;
+    cout << "\n6. Sector bat dau cua o dia logic: " << ntfs.startSecDisk;
+    cout << "\n7. Cluster bat dau cua MFT: " << ntfs.startCluster_MFT;
+    cout << "\n8. Cluster bat dau cua MFT du phong: " << ntfs.startCluster_MFTMirr;
+    cout << "\n9. Kich thuoc cua 1 ban ghi trong MFT: " << ntfs.sizeOf_MFTEntry << " byte " << "\n\n";
+}

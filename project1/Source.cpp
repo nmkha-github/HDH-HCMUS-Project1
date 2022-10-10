@@ -45,10 +45,6 @@ int readSector(LPCWSTR  drive, int readPoint, BYTE sector[512])
     {
         printf("ReadFile: %u\n", GetLastError());
     }
-    else
-    {
-        printf("Success!\n");
-    }
 }
 
 void inputBootsector(BYTE* sector, FAT32& f32)
@@ -67,6 +63,7 @@ void inputBootsector(BYTE* sector, FAT32& f32)
 
 void outputInforBootSector(FAT32 f32)
 {
+    if (f32.Sv <= 0){ cout << "Disk format is not FAT32, Khong the thuc hien doc"; return; }
     cout << "1. Loai FAT: FAT32";
     cout << "\n2. So Byte cho 1 sector: " << f32.bytePerSec;
     cout << "\n3. So Sector cho 1 cluster: " << f32.SC;
@@ -79,8 +76,6 @@ void outputInforBootSector(FAT32 f32)
     cout << "\n10. Sector dau tien cua vung RDET: " << f32.firstSectorRDET;
     cout << "\n11. Sector dau tien cua vung Data: " << f32.Ss << "\n\n";
 }
-
-
 
 // Partition Bootsector NTFS
 void inputPartitionBootsector(BYTE* sector, NTFS& ntfs) {
@@ -95,6 +90,7 @@ void inputPartitionBootsector(BYTE* sector, NTFS& ntfs) {
     ntfs.sizeOf_MFTEntry = hexToDec(sector, 64, 1);
 }
 void outputInforPartitionBootSector(NTFS ntfs) {
+    if (ntfs.totalSector <= 0) { cout << "Disk format is not NTFS, Khong the thuc hien doc"; return; }
     cout << "1. So Byte cua 1 sector: " << ntfs.bytePerSec;
     cout << "\n2. So Sector cho 1 cluster: " << ntfs.SC;
     cout << "\n3. So sector cho 1 track: " << ntfs.secPerTrack;

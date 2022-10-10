@@ -142,9 +142,11 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="source_menu.cpp" />
     <ClCompile Include="ViewFolder.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="menu.h" />
     <ClInclude Include="ViewFolder.h" />
     <ClInclude Include="Infor.h" />
   </ItemGroup>

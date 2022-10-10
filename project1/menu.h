@@ -2,7 +2,6 @@
 #ifndef Header_h
 #define Header_h
 #include <iostream>
-using namespace std;
 //declare functions
 int mainMenu();
 int luaChon(int x);

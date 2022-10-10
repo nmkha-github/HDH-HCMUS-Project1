@@ -54,9 +54,7 @@ public:
         return sumSize;
     }
     void add(Component* p) {
-        if (p->getName() != "System Volume Information") {
-            children.push_back(p);
-        }
+        children.push_back(p);
     }
     void showChildren() {
         std::cout << this->getName() << '\n';
@@ -66,9 +64,11 @@ public:
     void showAllChildren(int level = 1) {
         if (level == 1) std::cout << this->getName() << '\n';
         for (int i = 0; i < children.size(); i++) {
-            for (int j = 0; j < level - 1; j++) std::cout << "    ";
-            std::cout << "|-- " << children[i]->getName() << '\n';
-            children[i]->showAllChildren(level + 1);
+            if (children[i]->getName() != "System Volume Information") {
+                for (int j = 0; j < level - 1; j++) std::cout << "    ";
+                std::cout << "|-- " << children[i]->getName() << '\n';
+                children[i]->showAllChildren(level + 1);
+            }
         }
     }
 };

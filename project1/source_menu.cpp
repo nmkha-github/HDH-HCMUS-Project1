@@ -68,7 +68,13 @@ int chayMenu(int choose)
 	if (choose == 1)
 	{
 		//In noi dung sector
-
+		printf("\n Boot Sector: \n");
+		for (int i = 0; i < 512; i++) {
+			if (i % 16 == 0)
+				printf("\n");
+			BYTE tmp = sector[i];
+			printf("%c ", isascii(tmp) ? tmp : '.');
+		}
 	}
 	else if (choose == 2)
 	{

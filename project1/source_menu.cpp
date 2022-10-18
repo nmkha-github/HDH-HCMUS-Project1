@@ -10,6 +10,8 @@ NTFS ntfs;
 bool firstTimeRun = true;
 int mainMenu()
 {
+	system("cls");
+
 	wstring diskName;
 	std::cout << "Nhap o dia (vi du E): ";
 	std::wcin >> diskName;
@@ -17,7 +19,7 @@ int mainMenu()
 	LPCWSTR drive = diskName.c_str();
 	readSector(drive, 0, sector);
 
-	system("cls");
+	
 	std::cout << "......MENU CHINH......." << endl;
 	std::cout << "0. Thoat!" << endl;
 	std::cout << "1. In noi dung sector " << endl;
@@ -67,14 +69,60 @@ int chayMenu(int choose)
 {
 	if (choose == 1)
 	{
-		//In noi dung sector
-		printf("\n Boot Sector: \n");
-		for (int i = 0; i < 512; i++) {
-			if (i % 16 == 0)
-				printf("\n");
-			BYTE tmp = sector[i];
-			printf("%c ", isascii(tmp) ? tmp : '.');
+		//In noi dung sector	
+		int count = 0;
+		int num = 0;
+		std::cout << "--------------------------------------------------------------------------------------------\n";
+		std::cout << "Offset    0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F" << std::endl;
+		std::cout << "0x0" << num << "0  ";
+		bool flag = 0;
+		for (int i = 0; i < 512; i++)
+		{
+			count++;
+			if (i % 8 == 0)
+				cout << "  ";
+			printf("%02X ", sector[i]);
+			if (i == 255)
+			{
+				flag = 1;
+				num = 0;
+			}
+			if (i == 511) break;
+			if (count == 16)
+			{
+				int index = i;
+
+				std::cout << std::endl;
+
+				if (flag == 0)
+				{
+					num++;
+					if (num < 10)
+						std::cout << "0x0" << num << "0  ";
+					else
+					{
+						char hex = char(num - 10 + 'A');
+						std::cout << "0x0" << hex << "0  ";
+					}
+
+				}
+				else
+				{
+					if (num < 10)
+						cout << "0x1" << num << "0  ";
+					else
+					{
+						char hex = char(num - 10 + 'A');
+						cout << "0x1" << hex << "0  ";
+					}
+					num++;
+				}
+
+				count = 0;
+			}
 		}
+		printf("\n"); system("pause");
+		return 0;
 	}
 	else if (choose == 2)
 	{

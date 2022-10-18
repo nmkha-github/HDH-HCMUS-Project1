@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cmath>
 #include <windows.h>
-#include <atlstr.h>
 
 using namespace std;
 

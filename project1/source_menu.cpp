@@ -65,6 +65,20 @@ int menu2()
 	std::cout << "3. Quay lai menu chinh" << endl;
 	return 4;
 }
+
+string numToHexString(int num, bool c) {
+	string res = c ? "000001" : "000000";
+	if (num < 10) {
+		res += char(num + '0');
+		res += "0  ";
+	}
+	else {
+		res += char(num - 10 + 'A');
+		res += "0  ";
+	}
+	return res;
+}
+
 int chayMenu(int choose)
 {
 	if (choose == 1)
@@ -72,15 +86,16 @@ int chayMenu(int choose)
 		//In noi dung sector	
 		int count = 0;
 		int num = 0;
-		std::cout << "--------------------------------------------------------------------------------------------\n";
-		std::cout << "Offset    0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F" << std::endl;
-		std::cout << "0x0" << num << "0  ";
+		std::cout << "\n--------------------------------------------------------------------------------------------\n";
+		std::cout << "Offset       0  1  2  3  4  5  6  7    8  9  A  B  C  D  E  F" << std::endl;
+		std::cout << "000000" << num << "0  ";
 		bool flag = 0;
 		for (int i = 0; i < 512; i++)
 		{
 			count++;
-			if (i % 8 == 0)
-				cout << "  ";
+			if (!(i % 8)) {
+				printf("  ");
+			}
 			printf("%02X ", sector[i]);
 			if (i == 255)
 			{
@@ -90,31 +105,16 @@ int chayMenu(int choose)
 			if (i == 511) break;
 			if (count == 16)
 			{
-				int index = i;
-
-				std::cout << std::endl;
+				printf("\n");
 
 				if (flag == 0)
 				{
 					num++;
-					if (num < 10)
-						std::cout << "0x0" << num << "0  ";
-					else
-					{
-						char hex = char(num - 10 + 'A');
-						std::cout << "0x0" << hex << "0  ";
-					}
-
+					std::cout << numToHexString(num, 0);
 				}
 				else
 				{
-					if (num < 10)
-						cout << "0x1" << num << "0  ";
-					else
-					{
-						char hex = char(num - 10 + 'A');
-						cout << "0x1" << hex << "0  ";
-					}
+					std::cout << numToHexString(num, 1);
 					num++;
 				}
 

@@ -122,7 +122,6 @@ int chayMenu(int choose)
 			}
 		}
 		printf("\n"); system("pause");
-		return 0;
 	}
 	else if (choose == 2)
 	{
@@ -157,6 +156,7 @@ int chayMenu(int choose)
 		else {
 			std::cout << "Duong dan khong ton tai\n";
 		}
+		system("pause");
 	}
 	else if (choose == 3)
 	{
@@ -190,6 +190,7 @@ int chayMenu(int choose)
 	{
 		return xacNhanThoat();
 	}
+	return 0;
 }
 int runMenu1(int choose)
 {
@@ -202,6 +203,7 @@ int runMenu1(int choose)
 		//Đọc các thông tin được mô tả trong Boot Sector FAT
 		cout << "++++++++++++++++++    THONG TIN BOOTSECTOR FAT    ++++++++++++++++++\n";
 		outputInforBootSector(fat32);
+		system("pause");
 
 	}
 	else if (choose == 2)
@@ -209,11 +211,13 @@ int runMenu1(int choose)
 		//In thong tin RDET
 
 		std::cout << endl;
+		system("pause");
 	}
 	else if (choose == 3)
 	{
 		chayMenu(luaChon(mainMenu()));
 	}
+	return 0;
 }
 int runMenu2(int choose)
 {
@@ -225,18 +229,21 @@ int runMenu2(int choose)
 		inputPartitionBootsector(sector, ntfs);
 		cout << "++++++++++++++++++    THONG TIN PARTITION BOOTSECTOR NTFS    ++++++++++++++++++\n";
 		outputInforPartitionBootSector(ntfs);
+		printf("\n"); system("pause");
 	}
 	if (choose == 2)
 	{
 		//In noi dung master file table
 
 		std::cout << endl;
+		system("pause");
 	}
 	if (choose == 3)
 	{
 		chayMenu(luaChon(mainMenu()));
 	}
 	std::cout << endl;
+	return 0;
 }
 int xacNhanThoat()
 {

@@ -1,1 +1,5 @@
-﻿  project1.vcxproj -> D:\HDH-HCMUS-Project1\project1\x64\Debug\project1.exe
+﻿  Source.cpp
+  source_menu.cpp
+D:\HDH-HCMUS-Project1\project1\ViewFolder.h(53,1): warning C4244: '+=': conversion from 'uintmax_t' to 'int', possible loss of data
+  Generating Code...
+  project1.vcxproj -> D:\HDH-HCMUS-Project1\project1\x64\Debug\project1.exe

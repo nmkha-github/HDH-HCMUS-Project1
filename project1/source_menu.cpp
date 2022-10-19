@@ -6,19 +6,27 @@
 BYTE sector[512];
 FAT32 fat32;
 NTFS ntfs;
+wstring diskName;
+BYTE* FAT;
+BYTE* BootSector;
 
 bool firstTimeRun = true;
 int mainMenu()
 {
 	system("cls");
 
-	wstring diskName;
-	std::cout << "Nhap o dia (vi du E): ";
-	std::wcin >> diskName;
-	diskName = L"\\\\.\\" + diskName + L":";
-	LPCWSTR drive = diskName.c_str();
-	readSector(drive, 0, sector);
-
+	bool isError = true;
+	do {
+		std::cout << "Nhap o dia (vi du E): ";
+		std::wcin >> diskName;
+		diskName = L"\\\\.\\" + diskName + L":";
+		LPCWSTR drive = diskName.c_str();
+		isError = readSector(drive, 0, sector);
+		if (isError) {
+			system("cls");
+			std::cout << "Khong tim thay o dia moi nhap lai\n";
+		}
+	} while (isError);
 	
 	std::cout << "......MENU CHINH......." << endl;
 	std::cout << "0. Thoat!" << endl;
@@ -60,7 +68,7 @@ int menu2()
 	system("cls");
 	std::cout << "......NTFS......." << endl;
 	std::cout << "0. Thoat!" << endl;
-	std::cout << "1. In noi dung partition boot sector " << endl;
+	std::cout << "1. In noi dung BIOS parameter block " << endl;
 	std::cout << "2. In noi dung master file table " << endl;
 	std::cout << "3. Quay lai menu chinh" << endl;
 	return 4;
@@ -161,7 +169,9 @@ int chayMenu(int choose)
 	else if (choose == 3)
 	{
 		//Mo file
+		
 
+		system("pause");
 	}
 	else if (choose == 4)
 	{
@@ -203,7 +213,7 @@ int runMenu1(int choose)
 		//Đọc các thông tin được mô tả trong Boot Sector FAT
 		cout << "++++++++++++++++++    THONG TIN BOOTSECTOR FAT    ++++++++++++++++++\n";
 		outputInforBootSector(fat32);
-		system("pause");
+		printf("\n"); system("pause");
 
 	}
 	else if (choose == 2)
@@ -226,9 +236,9 @@ int runMenu2(int choose)
 	if (choose == 1)
 	{
 		//In noi dung partition boot sector
-		inputPartitionBootsector(sector, ntfs);
-		cout << "++++++++++++++++++    THONG TIN PARTITION BOOTSECTOR NTFS    ++++++++++++++++++\n";
-		outputInforPartitionBootSector(ntfs);
+		inputBIOSparameterblock(sector, ntfs);
+		cout << "++++++++++++++++++    THONG TIN BIOS parameter block    ++++++++++++++++++\n";
+		outputInforBIOSparameterblock(ntfs);
 		printf("\n"); system("pause");
 	}
 	if (choose == 2)

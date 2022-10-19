@@ -1,4 +1,4 @@
-
+﻿
 #include "Infor.h"
 
 int hexToDec(BYTE* sector, int offset, int len)
@@ -19,7 +19,7 @@ int hexToDec(BYTE* sector, int offset, int len)
     }
     return dec;
 }
-int readSector(LPCWSTR  drive, int readPoint, BYTE sector[512])
+int readSector(LPCWSTR  drive, int readPoint, BYTE sector[512], int count)
 {
     int retCode = 0;
     DWORD bytesRead;
@@ -41,10 +41,13 @@ int readSector(LPCWSTR  drive, int readPoint, BYTE sector[512])
 
     SetFilePointer(device, readPoint, NULL, FILE_BEGIN);//Set a Point to Read
 
-    if (!ReadFile(device, sector, 512, &bytesRead, NULL))
+    if (!ReadFile(device, sector, count, &bytesRead, NULL))
     {
         printf("ReadFile: %u\n", GetLastError());
+        return 1;
     }
+
+    return 0;
 }
 
 void inputBootsector(BYTE* sector, FAT32& f32)
@@ -77,8 +80,8 @@ void outputInforBootSector(FAT32 f32)
     cout << "\n11. Sector dau tien cua vung Data: " << f32.Ss << "\n\n";
 }
 
-// Partition Bootsector NTFS
-void inputPartitionBootsector(BYTE* sector, NTFS& ntfs) {
+// BIOS parameter block NTFS
+void inputBIOSparameterblock(BYTE* sector, NTFS& ntfs) {
     ntfs.bytePerSec = hexToDec(sector, 11, 2);
     ntfs.SC = hexToDec(sector, 13, 1);
     ntfs.secPerTrack = hexToDec(sector, 24, 2);
@@ -89,7 +92,7 @@ void inputPartitionBootsector(BYTE* sector, NTFS& ntfs) {
     ntfs.startCluster_MFTMirr = hexToDec(sector, 56, 8);
     ntfs.sizeOf_MFTEntry = hexToDec(sector, 64, 1);
 }
-void outputInforPartitionBootSector(NTFS ntfs) {
+void outputInforBIOSparameterblock(NTFS ntfs) {
     if (ntfs.totalSector <= 0) { cout << "Disk format is not NTFS, Khong the thuc hien doc"; return; }
     cout << "1. So Byte cua 1 sector: " << ntfs.bytePerSec;
     cout << "\n2. So Sector cho 1 cluster: " << ntfs.SC;
@@ -100,4 +103,20 @@ void outputInforPartitionBootSector(NTFS ntfs) {
     cout << "\n7. Cluster bat dau cua MFT: " << ntfs.startCluster_MFT;
     cout << "\n8. Cluster bat dau cua MFT du phong: " << ntfs.startCluster_MFTMirr;
     cout << "\n9. Kich thuoc cua 1 ban ghi trong MFT: " << ntfs.sizeOf_MFTEntry << " byte " << "\n\n";
+}
+
+bool initListClusters(std::vector<uint64_t>& listClusters, uint64_t startCluster, BYTE sector[]) {
+    int64_t value;
+    memcpy(&value, sector + (startCluster * 4), 4);
+    std::cout << value;
+    if (2 <= (value & 0x0FFFFFFF) && (value & 0x0FFFFFFF) <= 0x0FFFFFEF) {
+        listClusters.push_back(value);
+        initListClusters(listClusters, value, sector);
+        return true;
+    }
+    //EOF 
+    if (0x0FFFFFF8 <= (value & 0x0FFFFFFF) && (value & 0x0FFFFFFF) <= 0x0FFFFFFF)
+        return true;
+    //Không phải là cluster bắt đầu
+    return false;
 }

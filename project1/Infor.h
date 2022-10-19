@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include <cmath>
 #include <windows.h>
 
@@ -32,12 +33,14 @@ struct NTFS {
 };
 
 int hexToDec(BYTE*, int, int);
-int readSector(LPCWSTR, int, BYTE sector[512]);
+int readSector(LPCWSTR, int, BYTE sector[512], int count=512);
+
+bool initListClusters(std::vector<uint64_t>& listClusters, uint64_t startCluster, BYTE sector[]);
 
 // Bootsector FAT 32
 void inputBootsector(BYTE*, FAT32&);
 void outputInforBootSector(FAT32);
 
 // Partition Bootsector NTFS
-void inputPartitionBootsector(BYTE*, NTFS&);
-void outputInforPartitionBootSector(NTFS);
+void inputBIOSparameterblock(BYTE*, NTFS&);
+void outputInforBIOSparameterblock(NTFS);

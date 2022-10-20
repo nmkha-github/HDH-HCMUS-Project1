@@ -59,7 +59,6 @@ int menu1()
 	std::cout << "......FAT32......." << endl;
 	std::cout << "0. Thoat!" << endl;
 	std::cout << "1. In thong tin boot sector " << endl;
-	std::cout << "2. In thong tin RDET " << endl;
 	std::cout << "3. Quay lai menu chinh" << endl;
 	return 4;
 }
@@ -69,7 +68,6 @@ int menu2()
 	std::cout << "......NTFS......." << endl;
 	std::cout << "0. Thoat!" << endl;
 	std::cout << "1. In noi dung BIOS parameter block " << endl;
-	std::cout << "2. In noi dung master file table " << endl;
 	std::cout << "3. Quay lai menu chinh" << endl;
 	return 4;
 }
@@ -173,7 +171,7 @@ int chayMenu(int choose)
 	else if (choose == 3)
 	{
 		//Mo file
-		
+		std::cout << "Chua hoan thanh\n";
 
 		system("pause");
 	}

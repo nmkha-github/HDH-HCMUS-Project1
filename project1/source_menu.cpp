@@ -135,6 +135,10 @@ int chayMenu(int choose)
 	{
 		//In cay thu muc
 		std::wstring path;
+		std::cout << "Cac vi du duong dan hop le:\n";
+		std::cout << "1. E:\n";
+		std::cout << "2. E:\\Folder1\n";
+		std::cout << "3. E:\\Folder1\\folder2\\file.txt\n";
 		std::cout << "Nhap duong dan: ";
 		std::wcin.ignore();
 		getline(std::wcin, path);

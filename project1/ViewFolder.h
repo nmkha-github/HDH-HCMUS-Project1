@@ -59,7 +59,8 @@ public:
     void showChildren() {
         std::cout << this->getName() << '\n';
         for (int i = 0; i < children.size(); i++)
-            std::cout << "|-- " << children[i]->getName() << '\n';
+            if (children[i]->getName() != "System Volume Information") 
+                std::cout << "|-- " << children[i]->getName() << '\n';
     }
     void showAllChildren(int level = 1) {
         if (level == 1) std::cout << this->getName() << '\n';
